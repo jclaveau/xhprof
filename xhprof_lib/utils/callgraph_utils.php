@@ -117,8 +117,17 @@ function xhprof_generate_image_by_dot($dot_script, $type) {
     $output = stream_get_contents($pipes[1]);
 
     $err = stream_get_contents($pipes[2]);
-    if (!empty($err)) {
-      print "failed to execute cmd: \"$cmd\". stderr: `$err'\n";
+    $errors = explode("\n", $err);
+    foreach ($errors as $i => $error) {
+        // Fontconfig error shouldn't break the generation
+        if ($error == 'Fontconfig error: failed reading config file')
+            unset($errors[$i]);
+    }
+
+    $errors = array_filter($errors);
+
+    if (!empty($errors)) {
+      print "failed to execute cmd: \"$cmd\". stderr: `" . var_export($errors, true) . "'\n";
       exit;
     }
 
