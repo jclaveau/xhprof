@@ -1,0 +1,7 @@
+{
+    "name": "jclaveau/xhprof",
+    "description": "Fork of XHPROF to patch it when required",
+    "license": "MIT",
+    "keywords": ["profiler", "xhrpof"],
+    "minimum-stability": "dev"
+}
